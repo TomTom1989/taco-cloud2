@@ -10,7 +10,7 @@ spring:
       open-in-view: false
   h2:
     console:
-      enabled: false
+      enabled: true
   sql:
     init:
       mode: always
