@@ -1,4 +1,7 @@
 package tacos;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,13 +58,23 @@ public class TacoOrder implements Serializable {
  private List<Taco> tacos = new ArrayList<>();
  
  
+ private void writeObject(ObjectOutputStream oos) throws IOException {
+     oos.defaultWriteObject(); // This will serialize all non-transient fields
+     oos.writeObject(new ArrayList<>(tacos)); // Manually serialize the list
+ }
 
+ // Custom deserialization logic
+ private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+     ois.defaultReadObject(); // This will deserialize all non-transient fields
+     tacos = (List<Taco>) ois.readObject(); // Manually deserialize the list
+ }
 
  
 
  public void addTaco(Taco taco) {
- this.tacos.add(taco);
- }
+	    this.tacos.add(taco);
+	    taco.setTacoOrder(this); // Ensure the relationship is established from both sides
+	}
  public void setPlacedAt(Date placedAt) {
      this.placedAt = placedAt;
  }
@@ -72,6 +85,13 @@ public class TacoOrder implements Serializable {
 public void setId(long orderId) {
 	id=orderId;
 	
+}
+@Override
+public String toString() {
+    return "TacoOrder{" +
+           // "tacos=" + tacos + // Commented out to prevent recursion
+           // other fields...
+           '}';
 }
 
 }

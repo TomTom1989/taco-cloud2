@@ -8,25 +8,25 @@ CREATE TABLE IF NOT EXISTS Ingredient (
 
 -- Create the Taco_Order table
 CREATE TABLE IF NOT EXISTS Taco_Order (
-    id identity,
-    delivery_Name varchar(50) not null,
-    delivery_Street varchar(50) not null,
-    delivery_City varchar(50) not null,
-    delivery_State varchar(255) not null,
-    delivery_Zip varchar(10) not null,
-    cc_number varchar(16) not null,
-    cc_expiration varchar(5) not null,
-    cc_cvv varchar(3) not null,
-    placed_at timestamp not null,
-    PRIMARY KEY (id)  -- Add a primary key constraint
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    delivery_Name varchar(50),
+    delivery_Street varchar(50),
+    delivery_City varchar(50),
+    delivery_State varchar(255),
+    delivery_Zip varchar(10),
+    cc_number varchar(16),
+    cc_expiration varchar(5),
+    cc_cvv varchar(3),
+    placed_at timestamp
 );
+
 
 -- Create the Taco table
 CREATE TABLE IF NOT EXISTS Taco (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    taco_order BIGINT NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    name VARCHAR(50) ,
+    taco_order BIGINT ,
+    created_at TIMESTAMP ,
     FOREIGN KEY (taco_order) REFERENCES Taco_Order(id)
 );
 
