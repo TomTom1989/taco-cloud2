@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,16 +60,8 @@ public class TacoOrder implements Serializable {
  private List<Taco> tacos = new ArrayList<>();
  
  
- private void writeObject(ObjectOutputStream oos) throws IOException {
-     oos.defaultWriteObject(); // This will serialize all non-transient fields
-     oos.writeObject(new ArrayList<>(tacos)); // Manually serialize the list
- }
 
- // Custom deserialization logic
- private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-     ois.defaultReadObject(); // This will deserialize all non-transient fields
-     tacos = (List<Taco>) ois.readObject(); // Manually deserialize the list
- }
+
 
  
 
@@ -89,9 +83,11 @@ public void setId(long orderId) {
 @Override
 public String toString() {
     return "TacoOrder{" +
-           // "tacos=" + tacos + // Commented out to prevent recursion
-           // other fields...
+           "id=" + id +  // Assuming you have an 'id' field.
+           ", deliveryName='" + deliveryName + '\'' +  // Assuming you have a 'deliveryName' field.
+           ", deliveryStreet='" + deliveryStreet + '\'' +  // ...and so on for other fields.
+           ", tacos=" + (tacos != null ? tacos.stream().map(Taco::getName).collect(Collectors.toList()) : "No Tacos") +
+           // ... other fields you want to include
            '}';
-}
 
-}
+}}

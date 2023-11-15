@@ -46,8 +46,10 @@ public class Taco implements Serializable {
     @Override
     public String toString() {
         return "Taco{" +
-               // "tacoOrder=" + tacoOrder + // Commented out to prevent recursion
-               // other fields...
+               "id=" + id +  // Assuming you have an 'id' field.
+               ", name='" + name + '\'' +  // Assuming you have a 'name' field.
+               ", ingredients=" + ingredients +  // Assuming you have an 'ingredients' collection.
+               // ... other fields you want to include
                '}';
     }
 }

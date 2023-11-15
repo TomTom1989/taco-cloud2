@@ -1,4 +1,6 @@
 package tacos;
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
@@ -11,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access=AccessLevel.PRIVATE, force=true)
 
-public class Ingredient {
+public class Ingredient implements Serializable {
 	
  @Id
  private String id;

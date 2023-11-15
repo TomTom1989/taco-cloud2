@@ -77,11 +77,9 @@ public String showDesignForm(Model model) {
      }
 
      // Associate the Taco with the TacoOrder
-     tacoOrder.addTaco(taco);
-
-     // Save the taco. This assumes that you have cascading set up correctly
-     // on the TacoOrder entity to save associated Tacos.
-    //11tacoRepository.save(taco);
+    // tacoOrder.addTaco(taco);
+     tacoRepository.save(taco);
+  
 
      log.info("Processing taco: " + taco);
 
