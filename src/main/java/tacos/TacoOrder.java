@@ -26,6 +26,11 @@ import lombok.Data;
 @Entity
 public class TacoOrder implements Serializable {
 
+
+
+	//@Column(name = "taco_names")
+	private String tacoNames ;
+	
 	private static final long serialVersionUID = 1L;
 	
 	 @Id
@@ -65,10 +70,25 @@ public class TacoOrder implements Serializable {
 
  
 
- public void addTaco(Taco taco) {
+/* public void addTaco(Taco taco) {
 	    this.tacos.add(taco);
-	    taco.setTacoOrder(this); // Ensure the relationship is established from both sides
+	    updateTacoNames(); 
 	}
+ 
+ private void updateTacoNames() {
+     this.tacoNames = this.tacos.stream()
+                         .map(Taco::getName)
+                         .collect(Collectors.joining(", "));
+ }*/
+ 
+ public void addTacoName(String tacoName) {
+     if (this.tacoNames == null || this.tacoNames.isEmpty()) {
+         this.tacoNames = tacoName;
+     } else {
+         this.tacoNames += ", " + tacoName;
+     }
+ }
+ 
  public void setPlacedAt(Date placedAt) {
      this.placedAt = placedAt;
  }
@@ -80,14 +100,25 @@ public void setId(long orderId) {
 	id=orderId;
 	
 }
+
+public void setTacoNames(String tacoNames) {
+    this.tacoNames = tacoNames;
+}
+
+public String getTacoNames() {
+    return tacoNames;
+}
+public void addTaco(Taco taco) {
+    this.tacos.add(taco);
+}
+
 @Override
 public String toString() {
     return "TacoOrder{" +
-           "id=" + id +  // Assuming you have an 'id' field.
-           ", deliveryName='" + deliveryName + '\'' +  // Assuming you have a 'deliveryName' field.
-           ", deliveryStreet='" + deliveryStreet + '\'' +  // ...and so on for other fields.
-           ", tacos=" + (tacos != null ? tacos.stream().map(Taco::getName).collect(Collectors.toList()) : "No Tacos") +
-           // ... other fields you want to include
+           "id=" + id +
+           ", deliveryName='" + deliveryName + '\'' +
+           ", tacoNames='" + tacoNames + '\'' +
+           // add other fields if necessary
            '}';
-
-}}
+}
+}

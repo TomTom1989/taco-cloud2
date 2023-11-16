@@ -9,15 +9,16 @@ CREATE TABLE IF NOT EXISTS Ingredient (
 -- Create the Taco_Order table
 CREATE TABLE IF NOT EXISTS Taco_Order (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    delivery_Name varchar(50),
-    delivery_Street varchar(50),
-    delivery_City varchar(50),
-    delivery_State varchar(255),
-    delivery_Zip varchar(10),
-    cc_number varchar(16),
-    cc_expiration varchar(5),
-    cc_cvv varchar(3),
-    placed_at timestamp
+    delivery_Name VARCHAR(50),
+    delivery_Street VARCHAR(50),
+    delivery_City VARCHAR(50),
+    delivery_State VARCHAR(255),
+    delivery_Zip VARCHAR(10),
+    cc_number VARCHAR(16),
+    cc_expiration VARCHAR(5),
+    cc_cvv VARCHAR(3),
+    placed_at TIMESTAMP,
+    taco_names VARCHAR(255)   
 );
 
 

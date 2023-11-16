@@ -43,6 +43,10 @@ public class Taco implements Serializable {
         this.tacoOrder = tacoOrder;
     }
     
+    public String getName() {
+    	return name;
+    }
+    
     @Override
     public String toString() {
         return "Taco{" +

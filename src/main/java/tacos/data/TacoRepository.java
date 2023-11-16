@@ -1,8 +1,16 @@
 package tacos.data;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import tacos.Taco;
+import java.awt.print.Pageable;
+import java.util.List;
 
-public interface TacoRepository extends JpaRepository<Taco, Long> {
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import tacos.Taco;
+import tacos.TacoOrder;
+
+public interface TacoRepository extends CrudRepository<Taco, Long> {
+    List<Taco> findByTacoOrder(TacoOrder tacoOrder);
 }
+

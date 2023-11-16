@@ -68,26 +68,23 @@ public String showDesignForm(Model model) {
     return "design";
 }
  
- @PostMapping
- public String processTaco(@Valid @ModelAttribute Taco taco, Errors errors,
-                           @ModelAttribute("tacoOrder") TacoOrder tacoOrder,
-                           SessionStatus sessionStatus, Model model) {
-     if (errors.hasErrors()) {
-         return "design";
-     }
 
-     // Associate the Taco with the TacoOrder
-    // tacoOrder.addTaco(taco);
-     tacoRepository.save(taco);
-  
+@PostMapping
+public String processTaco(@Valid Taco taco, Errors errors,
+                          @ModelAttribute("tacoOrder") TacoOrder tacoOrder,
+                          Model model) {
+    if (errors.hasErrors()) {
+        return "design";
+    }
 
-     log.info("Processing taco: " + taco);
+    Taco savedTaco = tacoRepository.save(taco);
+    tacoOrder.addTacoName(savedTaco.getName());
+    model.addAttribute("tacoOrder", tacoOrder);
 
-     // Update the model attribute with the updated tacoOrder
-     model.addAttribute("tacoOrder", tacoOrder);
+    return "redirect:/orders/current";
+}
 
-     return "redirect:/orders/current";
- }
+
  
  
 }

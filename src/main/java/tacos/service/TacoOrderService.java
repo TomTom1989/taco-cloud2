@@ -1,5 +1,10 @@
 package tacos.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tacos.Taco;
@@ -20,17 +25,21 @@ public class TacoOrderService {
 
     @Transactional
     public void placeOrder(TacoOrder order) {
-        // Save the order to generate the ID, if not already saved
-        if (order.getId() == null) {
-            orderRepo.save(order);
-        }
+        // Extract taco names from the order
+    	 String tacoNames = order.getTacoNames();
         
+        System.out.println("Taco names being saved: " + tacoNames);
+        
+        // Set the taco names in the order
+        order.setTacoNames(tacoNames);
+
+        // Save the order, now including the taco names
+        TacoOrder savedOrder = orderRepo.save(order);
+
+        // Associate each Taco with the savedOrder and save it
         for (Taco taco : order.getTacos()) {
-            // Associate tacos with the saved order
-            taco.setTacoOrder(order);
-            // Save each taco which now includes a reference to the saved order
+            taco.setTacoOrder(savedOrder);
             tacoRepository.save(taco);
         }
-    }
 }
-
+}
