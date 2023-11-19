@@ -2,6 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Taco Cloud</title>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <script>
+        function fbLogoutUser() {
+            FB.getLoginStatus(function(response) {
+                if (response && response.status === 'connected') {
+                    FB.logout(function(response) {
+                        document.location.reload();
+                    });
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <h1>Welcome to TacosX</h1>
@@ -10,7 +22,7 @@
     <!-- Display logout message if it exists -->
     <div th:if="${logoutMessage}" th:text="${logoutMessage}"></div>
 
-    <form method="POST" th:action="@{/logout}">
+    <form method="POST" th:action="@{/logout}" onsubmit="fbLogoutUser()">
         <input type="submit" value="Logout"/>
     </form>
 </body>

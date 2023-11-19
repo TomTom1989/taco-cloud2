@@ -27,5 +27,17 @@ logging:
       hibernate:
         SQL: DEBUG
         type: TRACE
-    root: INFO  # Set the global logging level to INFO
-    tacos: DEBUG  # Assuming 'tacos' is your base package, set logging for your application code to DEBUG
+      springframework:
+        security: DEBUG
+        oauth2: DEBUG
+    root: INFO
+    tacos: DEBUG
+    
+security:
+  oauth2:
+    client:
+      registration:
+        facebook:
+          clientId: 2291618721048050
+          clientSecret: cf8d0e9f46ae20835b47d8a3f3d4d18e
+          scope: email, public_profile
