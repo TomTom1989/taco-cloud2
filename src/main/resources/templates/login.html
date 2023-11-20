@@ -6,24 +6,30 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script>
         function statusChangeCallback(response) {
+			console.log(response)
+			//alert('Status change callback fired!');
             console.log('statusChangeCallback');
             console.log(response);
             if (response.status === 'connected') {
+				alert('Connected');
                 // User logged in, redirect to server-side OAuth2 endpoint
                 window.location.href = '/my-oauth2-endpoint';
             } else {
+				 alert('Not connected');
                 document.getElementById('status').innerHTML = 'Please log ' +
                 'into this webpage.';
             }
         }
 
         function checkLoginState() {
+			 //alert('Check Login State');
             FB.getLoginStatus(function(response) {
                 statusChangeCallback(response);
             });
         }
 
         window.fbAsyncInit = function() {
+			//alert('FB SDK Initialized');
             FB.init({
                 appId      : '2291618721048050', // Replace with your Facebook App ID
                 cookie     : true,
@@ -32,6 +38,7 @@
             });
 
             FB.getLoginStatus(function(response) {
+				//alert('Get Login Status');
                 statusChangeCallback(response);
             });
         };

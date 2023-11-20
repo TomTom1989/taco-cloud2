@@ -16,8 +16,10 @@ public class OAuth2Controller {
 
     @GetMapping("/my-oauth2-endpoint")
     public String redirectToOAuth2() {
+    	logger.info("Redirecting to Facebook OAuth2 endpoint.");
         return "redirect:/oauth2/authorization/facebook";
     }
+    
 
     @GetMapping("/login")
     public String getLoginPage(@RequestParam(value = "error", required = false) String error,
