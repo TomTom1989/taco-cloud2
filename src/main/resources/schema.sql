@@ -31,11 +31,10 @@ CREATE TABLE IF NOT EXISTS Taco (
     FOREIGN KEY (taco_order) REFERENCES Taco_Order(id)
 );
 
--- Create the Ingredient_Ref table
 CREATE TABLE IF NOT EXISTS Ingredient_Ref (
     ingredient VARCHAR(4) NOT NULL,
     taco BIGINT NOT NULL,
-    FOREIGN KEY (ingredient) REFERENCES Ingredient(id),
+    FOREIGN KEY (ingredient) REFERENCES Ingredient(id) ON DELETE CASCADE,
     PRIMARY KEY (taco, ingredient)
 );
 

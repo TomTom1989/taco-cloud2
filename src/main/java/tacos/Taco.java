@@ -2,8 +2,16 @@ package tacos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import ch.qos.logback.core.subst.Token.Type;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +21,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import tacos.data.IngredientRepository;
+import tacos.data.TacoRepository;
+import tacos.data.UserRepository;
 
 @Data
 @Entity
+@RestResource(rel="tacos", path="tacos")
 public class Taco implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,4 +68,11 @@ public class Taco implements Serializable {
                // ... other fields you want to include
                '}';
     }
+    
+   
+    
+    
+    
+    
+    
 }

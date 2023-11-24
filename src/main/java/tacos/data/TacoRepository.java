@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import tacos.Taco;
 import tacos.TacoOrder;
 
-public interface TacoRepository extends CrudRepository<Taco, Long> {
+public interface TacoRepository extends JpaRepository<Taco, Long> {
     List<Taco> findByTacoOrder(TacoOrder tacoOrder);
 }
 

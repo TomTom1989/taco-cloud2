@@ -1,28 +1,37 @@
 package tacos;
-import java.io.Serializable;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor(access=AccessLevel.PRIVATE, force=true)
-
 public class Ingredient implements Serializable {
 	
- @Id
- private String id;
- 
- private String name;
- private Type type;
- 
- public static enum Type {
- WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
- }
+
+    public Ingredient(String id, String name, Type sauce) {
+		this.id=id;
+		this.name=name;
+		this.type=sauce;
+	}
+
+	@Id
+    private String id;
+    private String name;
+    private Type type;
+
+    @ManyToMany(mappedBy = "ingredients", cascade = CascadeType.ALL)
+    private List<Taco> tacos;
+
+    public static enum Type {
+        WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
+    }
 }
+
+
 
