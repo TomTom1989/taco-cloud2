@@ -61,10 +61,13 @@ public class IngredientService {
     	 ingredient.getId());
     	}
 
+    
+    //HTTP PUT:
     public Ingredient createIngredient(Ingredient ingredient) {
     	 return restTemplate.postForObject("http://localhost:8080/data-api/ingredients",
     	 ingredient, Ingredient.class);
     	}
+    
     
     public Ingredient createIngredient2(Ingredient ingredient) {
     	 ResponseEntity<Ingredient> responseEntity =
@@ -77,12 +80,12 @@ public class IngredientService {
     	}
     
     
-    /*public List<Ingredient> getAllIngredients() {
+   /* public List<Ingredient> getAllIngredients() {
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(
                 "http://localhost:8080/data-api/ingredients", String.class);
             
-            System.out.println("Response: " + responseEntity.getBody()); // Log the raw response
+            System.out.println("Response: " + responseEntity.getBody()); // 
 
             IngredientCollectionDTO response = restTemplate.getForObject(
                 "http://localhost:8080/data-api/ingredients",

@@ -1,15 +1,33 @@
 package tacos;
 
-import java.util.List;
+import org.springframework.boot.ApplicationRunner;
 
-import org.springframework.boot.CommandLineRunner;
+//import java.util.List;
+
+//import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+//import org.springframework.boot.autoconfigure.domain.EntityScan;
+//import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import tacos.data.IngredientRepository;
-import tacos.data.IngredientService;
+import tacos.authorization.AuthUserRepository;
+import tacos.authorization.User;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.JWKSet;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.util.UUID;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
+//import tacos.data.IngredientRepository;
+//import tacos.data.IngredientService;
 
 
 @SpringBootApplication
@@ -18,109 +36,33 @@ public class TacoCloudApplication {
     public static void main(String[] args) {
         SpringApplication.run(TacoCloudApplication.class, args);
     }
-
-    
-    //for demonstration or testing purpose: check if the API works!
-    //HTTP GET:
-    @Bean
-    public CommandLineRunner testIngredientService(IngredientService ingredientService) {
-        return args -> {
-            Ingredient ingredient = ingredientService.getIngredientById("FLTO");
-            if (ingredient != null) {
-                System.out.println("Ingredient found: " + ingredient);
-            } else {
-                System.out.println("Ingredient not found.");
-            }
-        };
-    }
-    //HTTP PUT:
-    @Bean
-    public CommandLineRunner testUpdateIngredient(IngredientService ingredientService) {
-        return args -> {
-            // Create an instance of Ingredient with the necessary data
-            Ingredient ingredientToUpdate = new Ingredient();
-            ingredientToUpdate.setId("FLTO"); // Set this to an existing ingredient's ID
-            ingredientToUpdate.setName("BINGO");
-            ingredientToUpdate.setType(Ingredient.Type.VEGGIES);
-
-            // Call the updateIngredient method
-            ingredientService.updateIngredient(ingredientToUpdate);
-
-            System.out.println("Ingredient updated: " + ingredientToUpdate);
-        };
-    }
-
-   
-  //HTTP DELETE:
-    @Bean
-    public CommandLineRunner testDeleteIngredient(IngredientService ingredientService) {
-        return args -> {
-            // Create an instance of Ingredient with the necessary ID
-            Ingredient ingredientToDelete = new Ingredient();
-            ingredientToDelete.setId("FLTO"); // Set this to the ID of the ingredient you want to delete
-
-            // Call the deleteIngredient method
-            ingredientService.deleteIngredient(ingredientToDelete);
-
-            System.out.println("Ingredient deletion requested for ID: " + ingredientToDelete.getId());
-        };
-    }
-
-
-     //HTTP POST:
-    @Bean
-    public CommandLineRunner testCreateIngredient(IngredientService ingredientService) {
-        return args -> {
-            // Create a new Ingredient instance with the required details
-            Ingredient newIngredient = new Ingredient("CHPT", "Chipotle", Ingredient.Type.SAUCE);
-            
-            // Call the createIngredient method
-            Ingredient createdIngredient = ingredientService.createIngredient(newIngredient);
-
-            // Output the result
-            if (createdIngredient != null) {
-                System.out.println("Ingredient created: " + createdIngredient);
-            } else {
-                System.out.println("Ingredient creation failed.");
-            }
-        };
-    }
-
-    @Bean
-    public CommandLineRunner testCreateIngredient2(IngredientService ingredientService) {
-        return args -> {
-            // Create a new Ingredient instance with the required details
-            Ingredient newIngredient = new Ingredient("CHPT", "Chipotle", Ingredient.Type.SAUCE);
-
-            // Call the createIngredient2 method
-            Ingredient createdIngredient = ingredientService.createIngredient2(newIngredient);
-
-            // Output the result
-            if (createdIngredient != null) {
-                System.out.println("Ingredient created: " + createdIngredient);
-            } else {
-                System.out.println("Ingredient creation failed.");
-            }
-        };
-    }
-
-
-    
-    
-    
-    
    /* @Bean
-    public CommandLineRunner testAllIngredientsService(IngredientService ingredientService) {
-        return args -> {
-            List<Ingredient> ingredients = ingredientService.getAllIngredients();
-            if (ingredients != null && !ingredients.isEmpty()) {
-                System.out.println("Ingredients found:");
-                ingredients.forEach(ingredient -> System.out.println(ingredient));
-            } else {
-                System.out.println("No ingredients found.");
-            }
-        };
-    }*/
-
-
+    public JWKSource<SecurityContext> jwkSource() {
+    RSAKey rsaKey = generateRsa();
+    JWKSet jwkSet = new JWKSet(rsaKey);
+    return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+    }
+    private static RSAKey generateRsa() {
+    KeyPair keyPair = generateRsaKey();
+    RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+    RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+    return new RSAKey.Builder(publicKey)
+    .privateKey(privateKey)
+    .keyID(UUID.randomUUID().toString())
+    .build();
+    }
+    private static KeyPair generateRsaKey() {
+    try {
+    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+    keyPairGenerator.initialize(2048);
+    return keyPairGenerator.generateKeyPair();
+    } catch (Exception e) {
+    return null;
+    }
+    }
+    @Bean
+    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+    return org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+    }
+ */
 }

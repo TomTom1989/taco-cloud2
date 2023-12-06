@@ -31,6 +31,13 @@ CREATE TABLE IF NOT EXISTS Taco (
     FOREIGN KEY (taco_order) REFERENCES Taco_Order(id)
 );
 
+CREATE TABLE IF NOT EXISTS Users (
+    username VARCHAR(255) PRIMARY KEY,
+    password VARCHAR(255),
+    role VARCHAR(255)
+);
+
+
 CREATE TABLE IF NOT EXISTS Ingredient_Ref (
     ingredient VARCHAR(4) NOT NULL,
     taco BIGINT NOT NULL,

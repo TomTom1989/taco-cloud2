@@ -8,7 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
       open-in-view: false
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -25,6 +25,12 @@ spring:
   data:
      rest:
        base-path: /data-api
+       
+  security: 
+     oAuth2:
+       resourceserver:
+         jwt:jwk-set-uri: http://localhost:9000/oauth2/jwks
+           
 
 logging:
   level:
@@ -46,3 +52,6 @@ security:
           clientId: 2291618721048050
           clientSecret: cf8d0e9f46ae20835b47d8a3f3d4d18e
           scope: email, public_profile
+          
+server:
+  port: 9000

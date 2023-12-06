@@ -22,7 +22,7 @@ public class OAuth2Controller {
     
 
     @GetMapping("/login")
-    public String getLoginPage(@RequestParam(value = "error", required = false) String error,
+    public String getLoginPage(@RequestParam(required = false) String error,
                                HttpServletRequest request,
                                Model model) {
         if (error != null) {

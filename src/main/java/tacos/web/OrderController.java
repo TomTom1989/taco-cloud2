@@ -23,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping("/current")
-    public String orderForm(@ModelAttribute("tacoOrder") TacoOrder tacoOrder, Model model) {
+    public String orderForm(@ModelAttribute TacoOrder tacoOrder, Model model) {
         model.addAttribute("tacoOrder", tacoOrder);
         return "orderForm";
     }

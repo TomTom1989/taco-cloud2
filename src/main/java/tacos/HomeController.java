@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 
     @GetMapping("/") 
-    public String home(@RequestParam(value = "logout", required = false) String logout, Model model) {
+    public String home(@RequestParam(required = false) String logout, Model model) {
         if (logout != null) {
             model.addAttribute("logoutMessage", "You have been logged out.");
         }

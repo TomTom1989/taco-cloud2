@@ -52,7 +52,7 @@ public class TacoController {
  }
  
  @GetMapping("/{id}")
- public ResponseEntity<Taco> tacoById(@PathVariable("id") Long id) {
+ public ResponseEntity<Taco> tacoById(@PathVariable Long id) {
   Optional<Taco> optTaco = tacoRepo.findById(id);
   if (optTaco.isPresent()) {
   return new ResponseEntity<>(optTaco.get(), HttpStatus.OK);
@@ -68,7 +68,7 @@ public class TacoController {
 
  @PutMapping(path="/{orderId}", consumes="application/json")
  public TacoOrder putOrder(
-  @PathVariable("orderId") Long orderId,
+  @PathVariable Long orderId,
   @RequestBody TacoOrder order) {
   order.setId(orderId);
   return orderRepo.save(order);
@@ -77,7 +77,7 @@ public class TacoController {
  
  @DeleteMapping("/{orderId}")
  @ResponseStatus(HttpStatus.NO_CONTENT)
- public void deleteOrder(@PathVariable("orderId") Long orderId) {
+ public void deleteOrder(@PathVariable Long orderId) {
   try {
   orderRepo.deleteById(orderId);
   } catch (EmptyResultDataAccessException e) {}
@@ -85,7 +85,7 @@ public class TacoController {
 
  
  @PatchMapping(path="/{orderId}", consumes="application/json")
- public TacoOrder patchOrder(@PathVariable("orderId") Long orderId,
+ public TacoOrder patchOrder(@PathVariable Long orderId,
   @RequestBody TacoOrder patch) {
   TacoOrder order = orderRepo.findById(orderId).get();
   if (patch.getDeliveryName() != null) {

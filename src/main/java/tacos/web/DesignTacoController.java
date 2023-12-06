@@ -71,7 +71,7 @@ public String showDesignForm(Model model) {
 
 @PostMapping
 public String processTaco(@Valid Taco taco, Errors errors,
-                          @ModelAttribute("tacoOrder") TacoOrder tacoOrder,
+                          @ModelAttribute TacoOrder tacoOrder,
                           Model model) {
     if (errors.hasErrors()) {
         return "design";
